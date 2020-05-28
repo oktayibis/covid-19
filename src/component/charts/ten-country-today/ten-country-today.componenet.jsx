@@ -3,8 +3,7 @@ import { Data } from "../../../data";
 import { Line } from "react-chartjs-2";
 import { Container, Typography } from "@material-ui/core";
 
-const filterSelection = (text) => {
-	const countries = Data.Countries;
+const filterSelection = (dataSet , text) => {
 	let chart = {};
 	let mostTenCountries = [];
 	let label = [];
@@ -12,7 +11,7 @@ const filterSelection = (text) => {
 
 	switch (text) {
 		case "NewConfirmed":
-			mostTenCountries = countries
+			mostTenCountries = dataSet
 				.sort((a, b) => b.NewConfirmed - a.NewConfirmed)
 				.slice(0, 10);
 			label = mostTenCountries.map((country) => country.Country);
@@ -32,7 +31,7 @@ const filterSelection = (text) => {
 			};
 			break;
 		case "NewDeaths":
-			mostTenCountries = countries
+			mostTenCountries = dataSet
 				.sort((a, b) => b.NewDeaths - a.NewDeaths)
 				.slice(0, 10);
 			label = mostTenCountries.map((country) => country.Country);
@@ -52,7 +51,7 @@ const filterSelection = (text) => {
 			};
 			break;
 		case "NewRecovered":
-			mostTenCountries = countries
+			mostTenCountries = dataSet
 				.sort((a, b) => b.NewRecovered - a.NewRecovered)
 				.slice(0, 10);
 			label = mostTenCountries.map((country) => country.Country);
@@ -72,7 +71,7 @@ const filterSelection = (text) => {
 			};
 			break;
 		case "TotalConfirmed":
-			mostTenCountries = countries
+			mostTenCountries = dataSet
 				.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed)
 				.slice(0, 10);
 			label = mostTenCountries.map((country) => country.Country);
@@ -92,7 +91,7 @@ const filterSelection = (text) => {
 			};
 			break;
 		case "TotalDeaths":
-			mostTenCountries = countries
+			mostTenCountries = dataSet
 				.sort((a, b) => b.TotalDeaths - a.TotalDeaths)
 				.slice(0, 10);
 			label = mostTenCountries.map((country) => country.Country);
@@ -112,7 +111,7 @@ const filterSelection = (text) => {
 			};
 			break;
 		case "TotalRecovered":
-			mostTenCountries = countries
+			mostTenCountries = dataSet
 				.sort((a, b) => b.TotalRecovered - a.TotalRecovered)
 				.slice(0, 10);
 			label = mostTenCountries.map((country) => country.Country);
@@ -138,12 +137,13 @@ const filterSelection = (text) => {
 
 	return chart;
 };
-const TenCountryToday = ({ filter }) => {
+const TenCountryToday = ({ filter, dataSet }) => {
 	const [data, setData] = React.useState({});
 	React.useEffect(() => {
-		setData(filterSelection(filter));
+		setData(filterSelection(dataSet, filter));
 	}, [filter]);
 
+if(dataSet){
 	return (
 		<div>
 			<Container>
@@ -157,6 +157,9 @@ const TenCountryToday = ({ filter }) => {
 			</Container>
 		</div>
 	);
+} else {
+	return <h1>Loading</h1>
+}
 };
 
 export default TenCountryToday;

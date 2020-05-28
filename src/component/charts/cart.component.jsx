@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
       textAlign: "center",
     }
   }));
-const ChartArea = () => {
+const ChartArea = ({data}) => {
 
     const classes = useStyles();
     const [selection, setSelection] = React.useState('NewConfirmed');
@@ -52,7 +52,7 @@ const ChartArea = () => {
       </FormControl>
         </Box>
         <Box>
-        <TenCountryToday filter={selection} />
+        <TenCountryToday dataSet={data} filter={selection} />
         </Box>
 			</Container>
 		</div>
