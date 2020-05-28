@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios"
+import React from "react";
+
 import Header from "./component/header/header.component";
+import ChartArea from "./component/charts/cart.component";
 import "./App.css";
 
 function App() {
@@ -8,8 +9,10 @@ function App() {
 	
 	return (
 		<div className="app">
-			<h1>Covid - 19 Website</h1>
+			<h1>Covid - 19 Info</h1>
 			<Header />
+			<ChartArea />
+
 		</div>
 	);
 }
