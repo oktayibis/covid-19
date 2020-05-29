@@ -12,6 +12,7 @@
     "chart.js": "^2.9.3",
     "firebase-tools": "^8.4.1",
     "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
@@ -21,7 +22,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "fix": "prettier --write src/**/*js* src/**/*.css src/**/*.scss src/**/*.jsx ",
+    "pre-push": "prettier --write src/**/*js* src/**/*.css src/**/*.scss src/**/*.jsx ",
+    "push": "git push"
+
   },
   "eslintConfig": {
     "extends": "react-app"
