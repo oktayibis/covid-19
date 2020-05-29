@@ -18,8 +18,7 @@ export default function Header({ data }) {
           Covid-19 Info Page
         </Typography>
         <Typography className={classes.marginFix} variant="caption">
-          {" "}
-          Today is {data.date}{" "}
+          Today is {data.date}
         </Typography>{" "}
         <br></br>
         <Typography
@@ -27,7 +26,6 @@ export default function Header({ data }) {
           variant="caption"
           color="secondary"
         >
-          {" "}
           Last updated at {data.time}
         </Typography>
         <Typography className={classes.marginFix} variant={"h3"} color="error">
