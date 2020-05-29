@@ -14,7 +14,7 @@ export default function Header({ data }) {
   return (
     <div className="header">
       <Container>
-     <Typography className={classes.marginFix} variant="h1">
+        <Typography className={classes.marginFix} variant="h1">
           Covid-19 Info Page
         </Typography>
         <Typography className={classes.marginFix} variant="caption">
@@ -22,7 +22,7 @@ export default function Header({ data }) {
           Today is {data.date}{" "}
         </Typography>{" "}
         <br></br>
-  <Typography
+        <Typography
           className={classes.marginFix}
           variant="caption"
           color="secondary"
