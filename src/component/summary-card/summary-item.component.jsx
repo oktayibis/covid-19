@@ -24,7 +24,7 @@ const useStyle = makeStyles((theme) => ({
   },
   text: {
     margin: "20% 10px",
-    fontSize: "2rem",
+    fontSize: "3rem",
     textAlign: "center",
     letterSpacing: "2px",
     color: "#cf7500",

@@ -1,6 +1,11 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import { Container, Typography } from "@material-ui/core";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { makeStyles } from "@material-ui/core/styles";
 
 const filterSelection = (dataSet, text) => {
   let chart = {};
@@ -136,21 +141,61 @@ const filterSelection = (dataSet, text) => {
 
   return chart;
 };
-const TenCountryToday = ({ filter, dataSet }) => {
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  container: {
+    width: "100%",
+    textAlign: "center",
+    backgroundColor: "#dddddd",
+    paddingTop: "20px",
+  },
+}));
+
+const TenCountryToday = ({ dataSet }) => {
   const [data, setData] = React.useState({});
+  const classes = useStyles();
+  const [selection, setSelection] = React.useState("NewConfirmed");
+
+  const handleChange = (event) => {
+    setSelection(event.target.value);
+  };
   React.useEffect(() => {
-    setData(filterSelection(dataSet, filter));
-  }, [dataSet, filter]);
+    setData(filterSelection(dataSet, selection));
+  }, [dataSet, selection]);
 
   if (dataSet) {
     return (
       <div>
-        <Container>
+        <Container className={classes.container}>
+          <FormControl variant="filled" className={classes.formControl}>
+            <InputLabel id="today-summary-chart">Choose Category</InputLabel>
+            <Select
+              labelId="today-summary-chart"
+              id="today-summary"
+              value={selection}
+              onChange={handleChange}
+            >
+              <MenuItem value={"NewConfirmed"}>Today Confirmed </MenuItem>
+              <MenuItem value={"NewDeaths"}>Today Deaths</MenuItem>
+              <MenuItem value={"NewRecovered"}>Today Recovery</MenuItem>
+              <MenuItem value={"TotalConfirmed"}>Total Confirmed</MenuItem>
+              <MenuItem value={"TotalDeaths"}>Total Deaths</MenuItem>
+              <MenuItem value={"TotalRecovered"}>Total Recovery</MenuItem>
+            </Select>
+          </FormControl>
+
           <Typography
             style={{ textAlign: "center", margin: "40px 10px" }}
             variant={"h3"}
           >
-            Most Ten Countries {filter}
+            Most Ten Countries for {selection}
           </Typography>
           <Line data={data} />
         </Container>
