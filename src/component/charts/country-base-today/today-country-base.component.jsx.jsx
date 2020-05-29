@@ -50,7 +50,7 @@ const renderChart = (nameOfCountry, data) => {
           borderColor: "#e84a5f",
           hoverBackgroundColor: "#e84a5f",
           backgroundColor: "#ff847c",
-          hoverBorderColor: "red",
+          hoverBorderColor: "#e84a5f",
         },
       ],
     };
