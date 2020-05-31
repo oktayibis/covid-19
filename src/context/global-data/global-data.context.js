@@ -1,10 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
-
 import axios from "axios";
-const SUMMARY_DATA_API = "https://api.covid19api.com/summary";
+
+const _SUMMARY_DATA_API = "https://api.covid19api.com/summary";
 
 export const GlobalDataContext = createContext();
 
+// Context Provider Component
 export const GlobalDataProvider = ({ children }) => {
   const [globalData, setGlobalData] = useState({
     data: {},
@@ -15,7 +16,7 @@ export const GlobalDataProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    axios.get(SUMMARY_DATA_API).then((response) => {
+    axios.get(_SUMMARY_DATA_API).then((response) => {
       const receivedData = response.data;
       setGlobalData({
         data: receivedData.Global,
