@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./header.style.scss";
 import { Container, Typography, makeStyles } from "@material-ui/core";
-
+import { GlobalDataContext } from "../../context/global-data/global-data.context";
 const useStyle = makeStyles((theme) => ({
   marginFix: {
     margin: "20px auto",
   },
 }));
 
-export default function Header({ data }) {
+export default function Header() {
   //const globalData = Data.Global;
+  const { date, time } = useContext(GlobalDataContext);
+
   const classes = useStyle();
   return (
     <div className="header">
@@ -18,15 +20,15 @@ export default function Header({ data }) {
           Covid-19 Info Page
         </Typography>
         <Typography className={classes.marginFix} variant="caption">
-          Today is {data.date}
-        </Typography>{" "}
+          Today is {date}
+        </Typography>
         <br></br>
         <Typography
           className={classes.marginFix}
           variant="caption"
           color="secondary"
         >
-          Last updated at {data.time}
+          Last updated at {time}
         </Typography>
         <Typography className={classes.marginFix} variant={"h3"} color="error">
           Summary

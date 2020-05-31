@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Line } from "react-chartjs-2";
 import { Container, Typography } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -6,8 +6,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
+import { GlobalDataContext } from "../../../context/global-data/global-data.context";
 
-const filterSelection = (dataSet, text) => {
+const filterSelection = (data, text) => {
   let chart = {};
   let mostTenCountries = [];
   let label = [];
@@ -15,7 +16,7 @@ const filterSelection = (dataSet, text) => {
 
   switch (text) {
     case "NewConfirmed":
-      mostTenCountries = dataSet
+      mostTenCountries = data
         .sort((a, b) => b.NewConfirmed - a.NewConfirmed)
         .slice(0, 10);
       label = mostTenCountries.map((country) => country.Country);
@@ -35,7 +36,7 @@ const filterSelection = (dataSet, text) => {
       };
       break;
     case "NewDeaths":
-      mostTenCountries = dataSet
+      mostTenCountries = data
         .sort((a, b) => b.NewDeaths - a.NewDeaths)
         .slice(0, 10);
       label = mostTenCountries.map((country) => country.Country);
@@ -55,7 +56,7 @@ const filterSelection = (dataSet, text) => {
       };
       break;
     case "NewRecovered":
-      mostTenCountries = dataSet
+      mostTenCountries = data
         .sort((a, b) => b.NewRecovered - a.NewRecovered)
         .slice(0, 10);
       label = mostTenCountries.map((country) => country.Country);
@@ -75,7 +76,7 @@ const filterSelection = (dataSet, text) => {
       };
       break;
     case "TotalConfirmed":
-      mostTenCountries = dataSet
+      mostTenCountries = data
         .sort((a, b) => b.TotalConfirmed - a.TotalConfirmed)
         .slice(0, 10);
       label = mostTenCountries.map((country) => country.Country);
@@ -95,7 +96,7 @@ const filterSelection = (dataSet, text) => {
       };
       break;
     case "TotalDeaths":
-      mostTenCountries = dataSet
+      mostTenCountries = data
         .sort((a, b) => b.TotalDeaths - a.TotalDeaths)
         .slice(0, 10);
       label = mostTenCountries.map((country) => country.Country);
@@ -115,7 +116,7 @@ const filterSelection = (dataSet, text) => {
       };
       break;
     case "TotalRecovered":
-      mostTenCountries = dataSet
+      mostTenCountries = data
         .sort((a, b) => b.TotalRecovered - a.TotalRecovered)
         .slice(0, 10);
       label = mostTenCountries.map((country) => country.Country);
@@ -158,19 +159,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TenCountryToday = ({ dataSet }) => {
-  const [data, setData] = React.useState({});
+const TenCountryToday = () => {
+  const [filteredCountry, setFilteredCountry] = React.useState({});
   const classes = useStyles();
   const [selection, setSelection] = React.useState("NewConfirmed");
+  const { countries } = useContext(GlobalDataContext);
 
   const handleChange = (event) => {
     setSelection(event.target.value);
   };
   React.useEffect(() => {
-    setData(filterSelection(dataSet, selection));
-  }, [dataSet, selection]);
+    setFilteredCountry(filterSelection(countries, selection));
+  }, [countries, selection]);
 
-  if (dataSet) {
+  if (countries) {
     return (
       <div>
         <Container className={classes.container}>
@@ -197,7 +199,7 @@ const TenCountryToday = ({ dataSet }) => {
           >
             Most Ten Countries for {selection}
           </Typography>
-          <Line data={data} />
+          <Line data={filteredCountry} />
         </Container>
       </div>
     );

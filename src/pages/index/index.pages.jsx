@@ -1,5 +1,4 @@
-import React from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 import Header from "../../component/header/header.component";
 import ChartArea from "../../component/charts/cart.component";
 import SummaryCard from "../../component/summary-card/summary-card.component";
@@ -9,37 +8,17 @@ import {
   Button,
   Container,
 } from "@material-ui/core";
-
-const SUMMARY_DATA_API = "https://api.covid19api.com/summary";
+import { GlobalDataContext } from "../../context/global-data/global-data.context";
 
 const IndexPage = () => {
-  const [globalData, setGlobalData] = React.useState({
-    data: {},
-    countries: [],
-    isLoaded: false,
-    date: "",
-    time: "",
-  });
-
-  React.useEffect(() => {
-    axios.get(SUMMARY_DATA_API).then((response) => {
-      const receivedData = response.data;
-      setGlobalData({
-        data: receivedData.Global,
-        countries: receivedData.Countries,
-        isLoaded: true,
-        date: new Date(receivedData.Date).toDateString(),
-        time: new Date(receivedData.Date).toTimeString(),
-      });
-    });
-  }, []);
+  const globalData = useContext(GlobalDataContext);
 
   if (globalData.isLoaded) {
     return (
       <div className="app">
-        <Header data={globalData} />
-        <SummaryCard data={globalData.data} />
-        <ChartArea data={globalData.countries} />
+        <Header />
+        <SummaryCard />
+        <ChartArea />
       </div>
     );
   } else {

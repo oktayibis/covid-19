@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -6,6 +6,7 @@ import Select from "@material-ui/core/Select";
 import { Container, Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Bar } from "react-chartjs-2";
+import { GlobalDataContext } from "../../../context/global-data/global-data.context";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -64,14 +65,15 @@ const sortArray = (a, b) => {
   }
   return 1;
 };
-const TotalCountryBase = ({ data, title }) => {
+const TotalCountryBase = ({ title }) => {
   const classes = useStyles();
   const [selection, setSelection] = React.useState("Turkey");
   const [dataSet, setDataSet] = React.useState({ list: {}, isLoaded: false });
+  const { countries } = useContext(GlobalDataContext);
 
   React.useEffect(() => {
-    setDataSet({ list: renderChart(selection, data), isLoaded: true });
-  }, [selection, data]);
+    setDataSet({ list: renderChart(selection, countries), isLoaded: true });
+  }, [selection, countries]);
 
   const handleChange = (event) => {
     setSelection(event.target.value);
@@ -96,7 +98,7 @@ const TotalCountryBase = ({ data, title }) => {
                 value={selection}
                 onChange={handleChange}
               >
-                {data.sort(sortArray).map((country) => (
+                {countries.sort(sortArray).map((country) => (
                   <MenuItem
                     key={`${title}-${country.slug}-${Math.random()}`}
                     value={country.Country}
